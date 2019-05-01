@@ -1,15 +1,13 @@
 const express = require('express');
-const helmet = require('helmet');
-const morgan = require('morgan');
+const configMiddleware = require('./config/middleware');
 
 const postsRouter = require('./posts/posts-router');
 const usersRouter = require('./users/users-router');
 
 const server = express();
 
-server.use(express.json());
-server.use(helmet());
-server.use(morgan('dev'));
+//middleware
+configMiddleware(server);
 
 server.use('/posts', postsRouter);
 server.use('/users', usersRouter);

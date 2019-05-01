@@ -3,7 +3,13 @@ const Users = require('../data/helpers/userDb');
 
 const router = express.Router();
 
-router.use(express.json())
+router.use(express.json());
+router.use(capName);
+
+function capName(req, res, next) {
+  req.body.name = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
+  next();
+}
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -56,7 +62,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 //Create a new user
-router.post('/', async (req, res) => {
+router.post('/', capName, async (req, res) => {
   try {
     const user = await Users.insert(req.body);
     res.status(200).json(user)
@@ -68,7 +74,7 @@ router.post('/', async (req, res) => {
 })
 
 // Update a user's name
-router.put('/:id', async (req, es) => {
+router.put('/:id', capName, async (req, es) => {
   try {
     const user = await Users.update(req.params.id, req.body);
     if (user) {
