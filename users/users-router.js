@@ -1,15 +1,11 @@
 const express = require('express');
 const Users = require('../data/helpers/userDb');
+const capName = require('../config/uppercase')
 
 const router = express.Router();
 
 router.use(express.json());
-router.use(capName);
-
-function capName(req, res, next) {
-  req.body.name = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
-  next();
-}
+// router.use(capName);
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -74,7 +70,7 @@ router.post('/', capName, async (req, res) => {
 })
 
 // Update a user's name
-router.put('/:id', capName, async (req, es) => {
+router.put('/:id', capName, async (req, res) => {
   try {
     const user = await Users.update(req.params.id, req.body);
     if (user) {
@@ -86,7 +82,5 @@ router.put('/:id', capName, async (req, es) => {
     res.status(500).json({ message: 'Error updating the user' })
   }
 })
-
-
 
 module.exports = router;
