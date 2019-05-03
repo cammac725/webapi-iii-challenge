@@ -5,7 +5,7 @@ const capName = require('../config/uppercase')
 const router = express.Router();
 
 router.use(express.json());
-// router.use(capName);
+router.use(capName);
 
 // Get all users
 router.get('/', async (req, res) => {

@@ -1,5 +1,7 @@
 function capName(req, res, next) {
-  req.body.name = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1)
+  if (req.body.name) {
+    req.body.name = req.body.name.toUpperCase();
+  }
   next();
 }
 
